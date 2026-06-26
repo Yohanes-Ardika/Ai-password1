@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yohanes Voice Ai</title>
+<title>Voice Ai</title>
 <style>
 body{margin:0;background:linear-gradient(#000011,#002244);color:#0ff;font-family:monospace;display:flex;flex-direction:column;align-items:center;height:100vh;justify-content:center}
 .box{background:#001133;border:2px solid #0ff;padding:25px;border-radius:15px;text-align:center;width:90%;max-width:350px}
@@ -17,12 +17,12 @@ h2{margin:0 0 15px 0}
 </head>
 <body>
 <div class="box">
-  <h2>🔊 Yohanes Voice Ai</h2>
+  <h2>🔊 Voice Ai</h2>
   <button class="btn" onclick="ngomong()">🔊 BICARA</button>
   <button class="btn" onclick="denger()">🎤 DENGER</button>
 
-  <textarea id="textBox" placeholder="Ketik teks di sini buat disuruh ngomong...">Hai, gua Yohanes Ai, Apa yang kamu ingin tanyakan?</textarea>
-  <div id="status">Siap ditugasin komandan</div>
+  <textarea id="textBox" placeholder="Ketik teks di sini buat disuruh ngomong...">Ketikan sesuatu disini buat di suruh ngomong... </textarea>
+  <div id="status">Siap</div>
 </div>
 
 <script>
@@ -40,7 +40,7 @@ if(!dengerBtn){
 // FUNGSI NGOMONG / TEXT TO SPEECH
 function ngomong(){
   let teks=document.getElementById('textBox').value;
-  if(teks=='') teks='Hai agen 007';
+  if(teks=='') teks='Hai apa kabar?';
 
   document.getElementById('status').innerText='Lagi ngomong...';
 
@@ -64,7 +64,7 @@ function ngomong(){
 // FUNGSI DENGER / SPEECH TO TEXT
 function denger(){
   if(!dengerBtn){
-    alert('HP lu gak support dengerin suara');
+    alert('HP kamu gak support dengerin suara');
     return;
   }
 
