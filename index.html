@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FROSTBOT Voice AI KW</title>
+<style>
+body{margin:0;background:linear-gradient(#000011,#002244);color:#0ff;font-family:monospace;display:flex;flex-direction:column;align-items:center;height:100vh;justify-content:center}
+.box{background:#001133;border:2px solid #0ff;padding:25px;border-radius:15px;text-align:center;width:90%;max-width:350px}
+h2{margin:0 0 15px 0}
+.btn{width:100px;height:100px;background:#0ff;color:#000;border:none;border-radius:50%;font-size:16px;font-weight:bold;margin:10px;box-shadow:0 5px 0 #0aa}
+.btn:active{transform:translateY(5px);box-shadow:0 0 0 #0aa}
+#status{margin-top:15px;font-size:14px;color:#ff0;min-height:20px}
+#textBox{width:90%;height:80px;background:#000;border:1px solid #0ff;color:#0ff;padding:8px;margin-top:10px;border-radius:8px;font-family:monospace}
+</style>
+</head>
+<body>
+<div class="box">
+  <h2>🧊 FROSTBOT Voice KW</h2>
+  <button class="btn" onclick="ngomong()">🔊 BICARA</button>
+  <button class="btn" onclick="denger()">🎤 DENGER</button>
+
+  <textarea id="textBox" placeholder="Ketik teks di sini buat disuruh ngomong...">Hai, gua Yohanes Ai, Apa yang kamu ingin tanyakan?</textarea>
+  <div id="status">Siap ditugasin komandan</div>
+</div>
+
+<script>
+// CEK BROWSER SUPPORT
+const ngomongBtn = window.speechSynthesis;
+const dengerBtn = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if(!ngomongBtn){
+  document.getElementById('status').innerText='Browser lu gak support ngomong 😭 Pake Chrome';
+}
+if(!dengerBtn){
+  document.getElementById('status').innerText+=' | Gak support dengerin juga';
+}
+
+// FUNGSI NGOMONG / TEXT TO SPEECH
+function ngomong(){
+  let teks=document.getElementById('textBox').value;
+  if(teks=='') teks='Hai agen 007';
+
+  document.getElementById('status').innerText='Lagi ngomong...';
+
+  let ucapan=new SpeechSynthesisUtterance(teks);
+  ucapan.lang='id-ID'; // Bahasa Indonesia
+  ucapan.rate=1; // Kecepatan 1 = normal
+  ucapan.pitch=1; // Nada 1 = normal
+
+  // Cari suara cewek/cowok Indo kalo ada
+  let voices=ngomongBtn.getVoices();
+  let voiceIndo=voices.find(v=>v.lang=='id-ID');
+  if(voiceIndo) ucapan.voice=voiceIndo;
+
+  ucapan.onend=()=>{
+    document.getElementById('status').innerText='Selesai ngomong. Pencet lagi kalo mau';
+  }
+
+  ngomongBtn.speak(ucapan);
+}
+
+// FUNGSI DENGER / SPEECH TO TEXT
+function denger(){
+  if(!dengerBtn){
+    alert('HP lu gak support dengerin suara');
+    return;
+  }
+
+  let recognition=new dengerBtn();
+  recognition.lang='id-ID';
+  recognition.onstart=()=>{
+    document.getElementById('status').innerText='Dengerin... Ngomong sekarang';
+  }
+  recognition.onresult=(event)=>{
+    let hasil=event.results[0][0].transcript;
+    document.getElementById('textBox').value=hasil;
+    document.getElementById('status').innerText='Dapet: "'+hasil+'" → Pencet BICARA';
+  }
+  recognition.onerror=()=>{
+    document.getElementById('status').innerText='Gagal denger. Coba lagi';
+  }
+  recognition.start();
+}
+
+// Auto load suara biar gak delay
+ngomongBtn.onvoiceschanged=()=>{};
+</script>
+</body>
+</html>
