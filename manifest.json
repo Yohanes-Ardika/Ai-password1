@@ -1,15 +1,14 @@
 {
   "name": "FROSTBITE AI",
-  "short_name": "FROSTBITE", 
+  "short_name": "FROSTBITE",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#000",
   "theme_color": "#000",
-  "description": "AI Chatbot FROSTBITE",
   "icons": [
     {
-      "src": "icon-192.png",
-      "sizes": "192x192",
+      "src": "icon-512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]
